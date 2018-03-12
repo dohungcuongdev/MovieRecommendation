@@ -25,6 +25,12 @@ public class Movie {
         this.genres = genres;
     }
     
+    public Movie(String id, String title, String genres) {
+        this.id = Integer.parseInt(id);
+        this.title = title;
+        this.genres = genres;
+    }
+    
     public Movie() {
     }
 
@@ -50,6 +56,10 @@ public class Movie {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public String getMId() {
+        return id+"";
     }
 
     @Override

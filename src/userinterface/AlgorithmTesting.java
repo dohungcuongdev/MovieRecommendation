@@ -36,7 +36,9 @@ public class AlgorithmTesting extends javax.swing.JFrame {
     public static int length;
     public static double minSP;
     public static String algorithmResult;
-    public static List<Frequentpattern> topMovies;
+    public static List<Integer> topMovies;
+    public static ArrayList freSeqList;
+    public static int inputlength;
 
     public AlgorithmTesting() {
         initComponents();
@@ -363,11 +365,13 @@ public class AlgorithmTesting extends javax.swing.JFrame {
 
                 Thread t2 = new Thread(new Runnable() {
                     public void run() {
+                    	AlgorithmTesting.inputlength = inputLength;
+                    	taResult.setText("System is running, please wait...");
                         SpadeAlgorithm spade = new SpadeAlgorithm();
-                        ArrayList freSeqList = spade.getFreSeqList(minSP, inputLength);
+                        freSeqList = spade.getFreSeqList(minSP, inputLength);
                         algorithmResult = "Length=" + inputLength + "\nMin-Support=" + minSP + "\n\n" + spade.getResult(freSeqList);
                         taResult.setText(algorithmResult);
-                        topMovies = spade.getFirstfrequentpatterns(freSeqList);
+                        topMovies = spade.getFirstfrequentpatternsMovieID(freSeqList);
                         dialog.setVisible(false);
                     }
                 });

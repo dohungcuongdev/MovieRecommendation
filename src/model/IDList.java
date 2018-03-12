@@ -344,6 +344,39 @@ public class IDList{
 		temp+="]";
 		return temp;
 	}
+	
+	public String getFirstSequence() {
+		String temp="";
+		for(int i=0;i<sequence.size();i++){
+			temp+=sequence.get(i);
+		}
+		return temp;
+	}
+	
+	public String getLastSequence() {
+		String temp="";
+		boolean comein=false;
+		for(int i=0;i<sequence.size();i++){
+			//System.out.println("Note"+this.sequence);
+			if(this.BID.get(i)==false){
+			      if(comein==false){
+			    	  comein=true;
+			    	  temp+=","+sequence.get(i);
+			      }else
+			    	  temp+=","+sequence.get(i);
+			}else{
+				if(comein==true){
+					comein=false;
+					temp+=","+sequence.get(i);
+					}
+				else
+					temp+=" "+sequence.get(i);
+				
+			}
+		}
+		return temp.replace(" ", ",").substring(1);
+	}
+	
 	public void setSequence(ArrayList<Integer> sequence) {
 		this.sequence = sequence;
 	}

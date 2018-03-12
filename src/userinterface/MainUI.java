@@ -8,11 +8,18 @@ package userinterface;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import model.Movie;
+import service.CSVReader;
 
 /**
  *
@@ -26,6 +33,17 @@ public class MainUI extends javax.swing.JFrame {
     public MainUI() {
         initComponents();
         setFrame();
+    }
+    
+    public static DefaultListModel model2 = new DefaultListModel();
+    public static List<Movie> listMovies = new ArrayList<>();
+    
+    static {
+    	listMovies = new CSVReader().getAllMovieFromCSV();
+        for(int i = 0; i < listMovies.size(); i++) {
+            model2.add(i, listMovies.get(i));
+            //System.out.println(listMovies.get(i));
+        }
     }
 
     private void setFrame() {

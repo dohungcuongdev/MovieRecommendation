@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.Frequentpattern;
 import model.Movie;
+import service.SpadeAlgorithm;
 
 /**
  *
@@ -59,24 +60,52 @@ public class RecommendationSystem extends javax.swing.JFrame {
         return movie;
     }
     
+    private DefaultListModel getModelMovie(List<Integer> top10Movie) {
+    	DefaultListModel model = new DefaultListModel();
+        int numTopMovie = (top10Movie.size() > 10) ? 10: top10Movie.size();
+    	for(int i = 0; i < numTopMovie; i++) {
+    		Movie m = findMVInList(top10Movie.get(i));
+    		if(m != null)
+    			model.add(i, m);
+    	}
+    	return model;
+    }
+    
+    private Movie findMVInList(int i) {
+    	for(Movie m: MainUI.listMovies) {
+    		if(m.getId() == i)
+    			return m;
+    	}
+    	return null;
+    }
+    
     private void showResult() {
-        List<Frequentpattern> top10Movie = AlgorithmTesting.topMovies;
+        List<Integer> top10Movie = AlgorithmTesting.topMovies;
         if(top10Movie != null) {
-            int numTopMovie = (top10Movie.size() > 10) ? 10: top10Movie.size();
-            DefaultListModel model = new DefaultListModel();
-            listTop10Movie.setModel(model);
-            DefaultListModel model2 = new DefaultListModel();
-            listAllMovie.setModel(model2);
-            
-            
-            for(int i = 0; i < numTopMovie; i++) {
-                model.add(i, getMovie(top10Movie.get(i).getSequence().toString().replace("[", "").replace("]", "")).toString());
-            }
-            
-//            for(int i = 0; i < top10Movie.size(); i++) {
-//                model2.add(i, getMovie(top10Movie.get(i).getSequence().toString().replace("[", "").replace("]", "")).toString());
-//            }
+            listTop10Movie.setModel(getModelMovie(top10Movie));
         }
+        listAllMovie.setModel(MainUI.model2);
+    }
+    
+    private void suggestByMovie(String mid) {
+    	String listRCMovieResult = "";
+    	if(AlgorithmTesting.inputlength == 2) {
+        	List<Integer> listMovieRcByMID = new SpadeAlgorithm().getFrequentpatternsMovieID(AlgorithmTesting.freSeqList, mid);
+        	for(int i: listMovieRcByMID) {
+        		Movie m = findMVInList(i);
+        		if(m != null)
+        			listRCMovieResult += m + "\n";
+        	}
+    	} else {
+    		List<Integer> top10Movie = AlgorithmTesting.topMovies;
+    		int numTopMovie = (top10Movie.size() > 20) ? 20: top10Movie.size();
+        	for(int i = 0; i < numTopMovie; i++) {
+        		Movie m = findMVInList(top10Movie.get(i));
+        		if(m != null)
+        			listRCMovieResult += m + "\n";
+        	}
+    	}
+		taResult.setText(listRCMovieResult);
     }
 
     private void setFrame() {
@@ -291,7 +320,7 @@ public class RecommendationSystem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSelectMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelectMovieActionPerformed
-
+        suggestByMovie(listAllMovie.getSelectedIndex() + 1 + "");
     }//GEN-LAST:event_btSelectMovieActionPerformed
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed

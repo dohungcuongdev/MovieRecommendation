@@ -85,7 +85,7 @@ public class TestDB {
 
         MySQLConnector m = new MySQLConnector();
         try {
-            String sql = "SELECT count(DISTINCT cid) FROM rating";
+            String sql = "SELECT count(DISTINCT cid) FROM `rating` WHERE mid <= 300 and cid <= 15";
             PreparedStatement statement = m.connect().prepareStatement(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
@@ -105,7 +105,7 @@ public class TestDB {
             Map<Double, MyList> mapRating = new HashMap<>();
 
             MySQLConnector m = new MySQLConnector();
-            String sql = "SELECT cid, mid, rating FROM rating where cid = " + i;
+            String sql = "SELECT * FROM `rating` WHERE mid <= 300 and cid <= 15 and cid = " + i;
             try {
                 PreparedStatement statement = m.connect().prepareStatement(sql);
                 ResultSet rs = statement.executeQuery(sql);
