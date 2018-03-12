@@ -28,29 +28,28 @@ import service.SpadeAlgorithm;
 
 /**
  *
- * @author 
+ * @author
  */
 public class RecommendationSystem extends javax.swing.JFrame {
 
     /**
-     * Creates new form 
+     * Creates new form
      */
     public RecommendationSystem() {
         initComponents();
         setFrame();
         showResult();
     }
-    
-        
+
     private static Movie getMovie(String mid) {
         Movie movie = new Movie();
         MySQLConnector m = new MySQLConnector();
         try {
-            String sql = "SELECT DISTINCT m.mid, m.title, m.genres from Movie m, rating r where m.mid = r.mid and m.mid = " +  mid;
+            String sql = "SELECT DISTINCT m.mid, m.title, m.genres from Movie m, rating r where m.mid = r.mid and m.mid = " + mid;
             PreparedStatement statement = m.connect().prepareStatement(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                movie = new Movie(rs.getInt("mid"), rs.getString("title"),rs.getString("genres"));
+                movie = new Movie(rs.getInt("mid"), rs.getString("title"), rs.getString("genres"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,53 +58,69 @@ public class RecommendationSystem extends javax.swing.JFrame {
         }
         return movie;
     }
-    
-    private DefaultListModel getModelMovie(List<Integer> top10Movie) {
-    	DefaultListModel model = new DefaultListModel();
-        int numTopMovie = (top10Movie.size() > 10) ? 10: top10Movie.size();
-    	for(int i = 0; i < numTopMovie; i++) {
-    		Movie m = findMVInList(top10Movie.get(i));
-    		if(m != null)
-    			model.add(i, m);
-    	}
-    	return model;
+
+    private DefaultListModel getModelMovie(List<Integer> top10Movie, int numTopMovie) {
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < numTopMovie; i++) {
+            Movie m = findMVInList(top10Movie.get(i));
+            if (m != null) {
+                model.add(i, m);
+                listRCMovieResult += m + "\n";
+            }
+        }
+        return model;
     }
-    
+
     private Movie findMVInList(int i) {
-    	for(Movie m: MainUI.listMovies) {
-    		if(m.getId() == i)
-    			return m;
-    	}
-    	return null;
+        for (Movie m : MainUI.listMovies) {
+            if (m.getId() == i) {
+                return m;
+            }
+        }
+        return null;
     }
-    
+
+    private String listRCMovieResult = "";
+
     private void showResult() {
         List<Integer> top10Movie = AlgorithmTesting.topMovies;
-        if(top10Movie != null) {
-            listTop10Movie.setModel(getModelMovie(top10Movie));
+        int numTopMovie = (top10Movie.size() > 10) ? 10 : top10Movie.size();
+        if (top10Movie != null) {
+            listTop10Movie.setModel(getModelMovie(top10Movie, numTopMovie));
         }
         listAllMovie.setModel(MainUI.model2);
+
+        int numDefaultMovie = (top10Movie.size() > 20) ? 20 : top10Movie.size();
+        for (int i = numTopMovie; i < numDefaultMovie; i++) {
+            Movie m = findMVInList(top10Movie.get(i));
+            if (m != null) {
+                listRCMovieResult += m + "\n";
+            }
+        }
     }
-    
+
     private void suggestByMovie(String mid) {
-    	String listRCMovieResult = "";
-    	if(AlgorithmTesting.inputlength == 2) {
-        	List<Integer> listMovieRcByMID = new SpadeAlgorithm().getFrequentpatternsMovieID(AlgorithmTesting.freSeqList, mid);
-        	for(int i: listMovieRcByMID) {
-        		Movie m = findMVInList(i);
-        		if(m != null)
-        			listRCMovieResult += m + "\n";
-        	}
-    	} else {
-    		List<Integer> top10Movie = AlgorithmTesting.topMovies;
-    		int numTopMovie = (top10Movie.size() > 20) ? 20: top10Movie.size();
-        	for(int i = 0; i < numTopMovie; i++) {
-        		Movie m = findMVInList(top10Movie.get(i));
-        		if(m != null)
-        			listRCMovieResult += m + "\n";
-        	}
-    	}
-		taResult.setText(listRCMovieResult);
+        if (AlgorithmTesting.inputlength == 2) {
+            String listRCMovieResultByID = "";
+            List<Integer> listMovieRcByMID = new SpadeAlgorithm().getFrequentpatternsMovieID(AlgorithmTesting.freSeqList, mid);
+            if (listMovieRcByMID.size() == 0) {
+                taResult.setText(listRCMovieResult);
+            } else {
+                for (int i : listMovieRcByMID) {
+                    Movie m = findMVInList(i);
+                    if (m != null) {
+                        listRCMovieResultByID += m + "\n";
+                    }
+                }
+                taResult.setText(listRCMovieResultByID);
+            }
+        } else {
+            taResult.setText(listRCMovieResult);
+        }
+    }
+
+    private void suggestDefaultMovie() {
+
     }
 
     private void setFrame() {
@@ -259,22 +274,19 @@ public class RecommendationSystem extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(24, 24, 24))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(96, 96, 96)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(661, 661, 661)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(96, 96, 96)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(194, 194, 194)
-                                            .addComponent(btSelectMovie)))))
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(134, 134, 134))))
+                        .addGap(134, 134, 134))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btSelectMovie)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(304, 304, 304))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(562, Short.MAX_VALUE)
@@ -286,21 +298,21 @@ public class RecommendationSystem extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
-                        .addGap(233, 233, 233)
-                        .addComponent(btSelectMovie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btSelectMovie))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(109, 109, 109)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                        .addGap(73, 73, 73)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
@@ -308,7 +320,7 @@ public class RecommendationSystem extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btBack)
                     .addComponent(btBack1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(200, 200, 200)
@@ -320,7 +332,7 @@ public class RecommendationSystem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSelectMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelectMovieActionPerformed
-        suggestByMovie(listAllMovie.getSelectedIndex() + 1 + "");
+        suggestByMovie(listAllMovie.getSelectedValue().split(",")[0].substring(4));
     }//GEN-LAST:event_btSelectMovieActionPerformed
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
@@ -342,7 +354,6 @@ public class RecommendationSystem extends javax.swing.JFrame {
     private void miExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_miExitActionPerformed
-
 
     /**
      * @param args the command line arguments

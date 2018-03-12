@@ -41,7 +41,7 @@ public class MainUI extends javax.swing.JFrame {
     static {
     	listMovies = new CSVReader().getAllMovieFromCSV();
         for(int i = 0; i < listMovies.size(); i++) {
-            model2.add(i, listMovies.get(i));
+            model2.add(i, listMovies.get(i).toString());
             //System.out.println(listMovies.get(i));
         }
     }

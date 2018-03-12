@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>src/dataset/dataset1.txt</url>
             <bookmark id="1">
@@ -9,11 +9,24 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>src/test/TestLastSeq.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset.txt</file>
             <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/service/SpadeAlgorithm.java</file>
+            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/RecommendationSystem.java</file>
+            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset1_2.txt</file>
+            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset1.txt</file>
             <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/test/TestLastSeq.java</file>
+            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/MainUI.java</file>
             <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/AlgorithmTesting.java</file>
             <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/service/CSVReader.java</file>
         </group>

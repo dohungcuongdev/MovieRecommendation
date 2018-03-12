@@ -120,7 +120,7 @@ public class AlgorithmTesting extends javax.swing.JFrame {
 
         cbInputLength.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cbInputLength.setForeground(new java.awt.Color(0, 0, 255));
-        cbInputLength.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
+        cbInputLength.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
         cbInputLength.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbInputLengthKeyPressed(evt);
