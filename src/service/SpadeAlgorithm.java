@@ -18,7 +18,7 @@ import model.Sequence;
 
 public class SpadeAlgorithm {
 
-    int SequenceMAXNumber = 10;
+    int SequenceMAXNumber = 1945;
 
     public static int getAllCID() {
 

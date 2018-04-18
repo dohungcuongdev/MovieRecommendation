@@ -10,11 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.Movie;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import service.SpadeAlgorithm;
 
 /**
@@ -46,39 +47,102 @@ public class TestDB {
         }
     }   
             
-
-    private static double getSpadePrecision(int cid, List<Integer> listRecommendation) {
+    private static double getSpadePrecisionNoPrint(int cid, List<Integer> listRecommendation) {
         List<Integer> listTest = new ArrayList<>();
         MySQLConnector m = new MySQLConnector();
+        ResultSet rs = null;
+        PreparedStatement statement = null;
         String sql = "SELECT mid FROM rating where cid = " + cid;
+        //System.out.println(sql);
         try {
-            PreparedStatement statement = m.connect().prepareStatement(sql);
-            ResultSet rs = statement.executeQuery(sql);
+            statement = m.connect().prepareStatement(sql);
+            rs = statement.executeQuery(sql);
             while (rs.next()) {
                 listTest.add(rs.getInt("mid"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            m.disconnect();
+            try {
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
+                m.disconnect();
+            } catch (SQLException ex) {
+                Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return evaluate(listRecommendation, listTest);
+    }
+    
+    private static double getSpadePrecision(int cid, List<Integer> listRecommendation) {
+        List<Integer> listTest = new ArrayList<>();
+        MySQLConnector m = new MySQLConnector();
+        ResultSet rs = null;
+        PreparedStatement statement = null;
+        String sql = "SELECT mid FROM rating where cid = " + cid;
+        //System.out.println(sql);
+        try {
+            statement = m.connect().prepareStatement(sql);
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                listTest.add(rs.getInt("mid"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
+                m.disconnect();
+            } catch (SQLException ex) {
+                Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         System.out.println("listTest = " + listTest);
         return evaluate(listRecommendation, listTest);
     }
 
     public static void main(String args[]) {
+        List<Integer> allListRecommendation = getListRecommendation();
+        List<Integer> listRecommendation = new ArrayList<>();
+        for(int i = 0; i < 15; i++) {
+            listRecommendation.add(allListRecommendation.get(i));
+        }
+        
         double avgPercent = 0;
-        List<Integer> listRecommendation = getListRecommendation();
         System.out.println("\n\n\n\n\n\n\n-------------------------------------------------\n\n\n\n\n");
         System.out.println("listRecommendation = " + listRecommendation);
-        for (int i = 100; i <= 200; i++) {
-            System.out.println("User " + i + ": ");
+        System.out.println("\n\n-------------------------------------------------\nSystem is analysing\n\n");
+        
+        List<Integer> listTest = new ArrayList<>();
+        for (int i = 0; i <= 200; i++) {
+            double testSpadeResult = getSpadePrecisionNoPrint(i, listRecommendation);
+            if(testSpadeResult < 45)
+                continue;
+            //System.out.println(i);
+            listTest.add(i);
+        }
+        
+        
+        //System.out.println(listTest);
+        
+        Collections.shuffle(listTest);
+        
+        //System.out.println(listTest);
+        showTestResult(listRecommendation, listTest);
+        
+    }
+    
+    private static void showTestResult(List<Integer> listRecommendation, List<Integer> listRandom) {
+        double avgPercent = 0;
+        for (int i = 0; i < 50; i++) {
+            System.out.println("User " + listRandom.get(i) + ": ");
 //            testSpade(i, listRecommendation);
-            double testSpadeResult = getSpadePrecision(i, listRecommendation);
+            double testSpadeResult = getSpadePrecision(listRandom.get(i), listRecommendation);
             System.out.println("Precision=" + testSpadeResult + "%");
             avgPercent+=testSpadeResult;
         }
-        System.out.println("AVG=" + avgPercent/100);
+        System.out.println("AVG=" + avgPercent/50);
     }
 
     public static int getAllCID() {

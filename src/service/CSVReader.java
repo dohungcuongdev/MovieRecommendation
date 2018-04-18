@@ -50,7 +50,8 @@ public class CSVReader {
                 String movieId = movies.get("movieId");
                 String title = movies.get("title");
                 String genres = movies.get("genres");
-                Movie movie = new Movie(movieId, title, genres);
+                String image = movies.get("image");
+                Movie movie = new Movie(movieId, title, genres, image);
 
                 // perform program logic here
                 listMovies.add(movie);

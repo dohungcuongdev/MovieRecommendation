@@ -14,6 +14,7 @@ public class Movie {
     private int id;
     private String title;
     private String genres;
+    private String img;
 
     public Movie(String title) {
         this.title = title;
@@ -29,6 +30,16 @@ public class Movie {
         this.id = Integer.parseInt(id);
         this.title = title;
         this.genres = genres;
+    }
+    
+    
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
     
     public Movie() {
@@ -62,12 +73,22 @@ public class Movie {
         return id+"";
     }
 
-    @Override
-    public String toString() {
-        return "{" + "id=" + id + ", title=" + title + ", genres=" + genres + '}';
+    public Movie(int id, String title, String genres, String img) {
+        this.id = id;
+        this.title = title;
+        this.genres = genres;
+        this.img = img;
     }
     
-    
-    
-    
+    public Movie(String id, String title, String genres, String img) {
+        this.id = Integer.parseInt(id);
+        this.title = title;
+        this.genres = genres;
+        this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" + "id=" + id + ", title=" + title + ", genres=" + genres + ", img=" + img + '}';
+    }
 }
