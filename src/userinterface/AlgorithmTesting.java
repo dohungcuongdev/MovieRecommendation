@@ -60,7 +60,7 @@ public class AlgorithmTesting extends javax.swing.JFrame {
         // Move the window
         this.setLocation(x, y);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**

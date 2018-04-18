@@ -20,15 +20,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset.txt</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/service/SpadeAlgorithm.java</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/RecommendationSystem.java</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset1_2.txt</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/dataset/dataset1.txt</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/test/TestLastSeq.java</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/MainUI.java</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/userinterface/AlgorithmTesting.java</file>
-            <file>file:/C:/Users/Admin/Desktop/MovieRecommemdationSystem/src/service/CSVReader.java</file>
+            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/AlgorithmTesting.java</file>
+            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/MainUI.java</file>
+            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/dataset/movies.csv</file>
+            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/RecommendationSystem.java</file>
         </group>
     </open-files>
 </project-private>
