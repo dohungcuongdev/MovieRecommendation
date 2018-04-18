@@ -14,6 +14,7 @@ import model.Frequentpattern;
 import model.IDList;
 import model.Input;
 import model.ItemSet;
+import model.Movie;
 import model.Sequence;
 
 public class SpadeAlgorithm {

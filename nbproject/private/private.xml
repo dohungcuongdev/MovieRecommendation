@@ -21,7 +21,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/AlgorithmTesting.java</file>
-            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/MainUI.java</file>
+            <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/service/SpadeAlgorithm.java</file>
             <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/dataset/movies.csv</file>
             <file>file:/D:/study/NetBeansProjects/MovieRecommemdationSystem/src/userinterface/RecommendationSystem.java</file>
         </group>

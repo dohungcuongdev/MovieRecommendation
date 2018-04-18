@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.Frequentpattern;
+import model.IDList;
+import model.Movie;
 import service.SpadeAlgorithm;
 
 /**
@@ -36,7 +38,7 @@ public class AlgorithmTesting extends javax.swing.JFrame {
     public static int length;
     public static double minSP;
     public static String algorithmResult;
-    public static List<Integer> topMovies;
+    public static List<Movie> topMovies;
     public static ArrayList freSeqList;
     public static int inputlength;
 
@@ -371,7 +373,7 @@ public class AlgorithmTesting extends javax.swing.JFrame {
                         freSeqList = spade.getFreSeqList(minSP, inputLength);
                         algorithmResult = "Length=" + inputLength + "\nMin-Support=" + minSP + "\n\n" + spade.getResult(freSeqList);
                         taResult.setText(algorithmResult);
-                        topMovies = spade.getFirstfrequentpatternsMovieID(freSeqList);
+                        topMovies = getFirstfrequentpatternsMovie(freSeqList);
                         dialog.setVisible(false);
                     }
                 });
@@ -382,6 +384,30 @@ public class AlgorithmTesting extends javax.swing.JFrame {
             //e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Min support must be a number", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    
+    
+    private List<Movie> getFirstfrequentpatternsMovie(ArrayList Freq) {
+        IDList value;
+        int support;
+        List<Movie> movies = new ArrayList<>();
+        List<IDList> tmp = (ArrayList) Freq.get(0);
+        for (int i = 0; i < tmp.size(); i++) {
+            value = (IDList) tmp.get(i);
+            int movieID = Integer.parseInt(value.getFirstSequence());
+            movies.add(findMVInList(movieID));
+        }
+        return movies;
+    }
+    
+    private Movie findMVInList(int i) {
+        for (Movie m : MainUI.listMovies) {
+            if (m.getId() == i) {
+                return m;
+            }
+        }
+        return null;
     }
 
     /**

@@ -47,16 +47,13 @@ public class RecommendationSystem extends javax.swing.JFrame {
         showResult();
     }
 
-    private DefaultListModel getModelMovie(List<Integer> top10Movie, int numTopMovie) {
-        DefaultListModel model = new DefaultListModel();
+    private void init10Movie(List<Movie> top10Movie, int numTopMovie) {
         for (int i = 0; i < numTopMovie; i++) {
-            Movie m = findMVInList(top10Movie.get(i));
+            Movie m = top10Movie.get(i);
             if (m != null) {
-                model.add(i, m);
                 listRCMovieResult += m + "\n";
             }
         }
-        return model;
     }
 
     private Movie findMVInList(int i) {
@@ -80,28 +77,29 @@ public class RecommendationSystem extends javax.swing.JFrame {
     private String listRCMovieResult = "";
 
     private void showResult() {
-        List<Integer> top10Movie = AlgorithmTesting.topMovies;
+        List<Movie> top10Movie = AlgorithmTesting.topMovies;
         if (top10Movie == null) {
             return;
         }
         int numTopMovie = (top10Movie.size() > 10) ? 10 : top10Movie.size();
         if (top10Movie != null) {
-            showMVDetails(MainUI.listMovies.get(0).getTitle(), MainUI.listMovies.get(0).getImg(), m1, t1);
-            showMVDetails(MainUI.listMovies.get(1).getTitle(), MainUI.listMovies.get(1).getImg(), m2, t2);
-            showMVDetails(MainUI.listMovies.get(2).getTitle(), MainUI.listMovies.get(2).getImg(), m3, t3);
-            showMVDetails(MainUI.listMovies.get(3).getTitle(), MainUI.listMovies.get(3).getImg(), m4, t4);
-            showMVDetails(MainUI.listMovies.get(4).getTitle(), MainUI.listMovies.get(4).getImg(), m5, t5);
-            showMVDetails(MainUI.listMovies.get(5).getTitle(), MainUI.listMovies.get(5).getImg(), m6, t6);
-            showMVDetails(MainUI.listMovies.get(6).getTitle(), MainUI.listMovies.get(6).getImg(), m7, t7);
-            showMVDetails(MainUI.listMovies.get(7).getTitle(), MainUI.listMovies.get(7).getImg(), m8, t8);
-            showMVDetails(MainUI.listMovies.get(8).getTitle(), MainUI.listMovies.get(8).getImg(), m9, t9);
-            showMVDetails(MainUI.listMovies.get(9).getTitle(), MainUI.listMovies.get(9).getImg(), m10, t10);
+            init10Movie(top10Movie, numTopMovie);
+            showMVDetails(top10Movie.get(0).getTitle(), top10Movie.get(0).getImg(), m1, t1);
+            showMVDetails(top10Movie.get(1).getTitle(), top10Movie.get(1).getImg(), m2, t2);
+            showMVDetails(top10Movie.get(2).getTitle(), top10Movie.get(2).getImg(), m3, t3);
+            showMVDetails(top10Movie.get(3).getTitle(), top10Movie.get(3).getImg(), m4, t4);
+            showMVDetails(top10Movie.get(4).getTitle(), top10Movie.get(4).getImg(), m5, t5);
+            showMVDetails(top10Movie.get(5).getTitle(), top10Movie.get(5).getImg(), m6, t6);
+            showMVDetails(top10Movie.get(6).getTitle(), top10Movie.get(6).getImg(), m7, t7);
+            showMVDetails(top10Movie.get(7).getTitle(), top10Movie.get(7).getImg(), m8, t8);
+            showMVDetails(top10Movie.get(8).getTitle(), top10Movie.get(8).getImg(), m9, t9);
+            showMVDetails(top10Movie.get(9).getTitle(), top10Movie.get(9).getImg(), m10, t10);
         }
         listAllMovie.setModel(MainUI.model2);
 
         int numDefaultMovie = (top10Movie.size() > 20) ? 20 : top10Movie.size();
         for (int i = numTopMovie; i < numDefaultMovie; i++) {
-            Movie m = findMVInList(top10Movie.get(i));
+            Movie m = top10Movie.get(i);
             if (m != null) {
                 listRCMovieResult += m + "\n";
             }
@@ -163,7 +161,7 @@ public class RecommendationSystem extends javax.swing.JFrame {
     private void showMVDetails(int width, int height, String title, String icon, JLabel m, JLabel t) {
         BufferedImage image;
         try {
-            image = ImageIO.read(new File("src\\image\\mv\\" + icon));
+            image = ImageIO.read(new File("src/image/mv/" + icon));
             ImageIcon ii = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
             m.setIcon(ii);
             t.setText(title);
@@ -396,11 +394,12 @@ public class RecommendationSystem extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(m4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(m2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(m3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(m5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(m4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(m2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(m3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(m5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(m9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -525,16 +524,16 @@ public class RecommendationSystem extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(197, 197, 197))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(btBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
                 .addGap(262, 262, 262)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(btBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -542,33 +541,29 @@ public class RecommendationSystem extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(278, 278, 278))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(58, 58, 58)))))
-                        .addComponent(btBack1)
-                        .addContainerGap(16, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btBack)
-                        .addGap(27, 27, 27))))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(323, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btBack)
+                                    .addComponent(btBack1))
+                                .addGap(75, 75, 75))))))
         );
 
         pack();
